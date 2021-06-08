@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+typedef int ElemType;
+typedef  struct  BSTNode
+{  ElemType  data;
+   struct  BSTNode   *lchild,*rchild;
+}BSTNode,*BSTree;
+
+void BSTInsert( BSTree &T, BSTree s);
+void BSTCreate(BSTree  &T);
+BSTree BSTSearch(BSTree T, ElemType k);
+
+void BSTInsert( BSTree &T, BSTree s)
+{	if(T==NULL)
+		T=s;
+	else if(s->data<T->data)
+		BSTInsert(T->lchild,s);
+	else BSTInsert(T->rchild,s);
+}
+
+void BSTCreate(BSTree  &T)
+{   ElemType x;  BSTree  s;
+    T=NULL;
+    cin>>x;
+    while (x!=-1)
+    {  s=new BSTNode;
+       s->data=x;
+       s->lchild=s->rchild=NULL;
+       BSTInsert( T, s );
+       cin>>x;
+    }
+}
+
+BSTree BSTSearch(BSTree T, ElemType k)
+{  if(!T || k==T->data)
+      return T;
+   if(k<T->data)
+      return  BSTSearch(T->lchild,k);
+   else
+      return  BSTSearch (T->rchild,k);
+}
+
+int main ()
+{	BSTree T,p; int x;
+	BSTCreate(T);
+	cin>>x;
+	p=BSTSearch(T,x);
+	if(p!=NULL)
+	{  cout<<"have found!";
+	   cout<<" lchild:";
+	   if(p->lchild) cout<<p->lchild->data;
+	   else cout<<"NULL";
+	   cout<<" rchild:";
+	   if(p->rchild) cout<<p->rchild->data;
+	   else cout<<"NULL";
+	}
+	else
+       cout<<"NOT FOUND!";
+    return 0;
+}
+
