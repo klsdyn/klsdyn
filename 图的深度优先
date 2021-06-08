@@ -1,0 +1,73 @@
+#include<iostream>
+#include<cstdio>
+#define max 10
+using namespace std;
+typedef struct {
+	int arcs[max][max];
+	int vexnum,arcnum;
+}Bnode ;
+int k=0;
+int e=0;
+int visited[100]={0};
+void create(Bnode &r)
+{
+	int v1,v2;
+	cin>>r.vexnum>>r.arcnum;
+	for(int i=0;i<r.vexnum;i++)
+	for(int j=0;j<r.vexnum;j++)
+	r.arcs[i][j]=0;
+	for(int i=0;i<r.arcnum;i++)
+	{
+		cin>>v1>>v2;
+		r.arcs[v1][v2]=r.arcs[v2][v1]=1;
+	}
+}
+int first(Bnode &r,int v)
+{
+	int j;
+	for(j=0;j<=r.vexnum;j++)
+	if(r.arcs[v][j]==1)
+	return j;
+	return -1;
+}
+int next(Bnode &r,int v,int w)
+{
+	int j;
+	for(j=w+1;j<r.vexnum;j++)
+	if(r.arcs[v][j]==1)
+	return j;
+	return -1;
+}
+void DFS(Bnode &r,int v)
+{
+	cout<<v<<" ";
+	visited[v]=1;
+	int w;
+	for(w=first(r,v);w>=0;w=next(r,v,w))
+	{
+		if(!visited[w])
+		DFS(r,w);
+	}
+}
+void DFSchazhao(Bnode &r)
+{
+	int v;
+	for(v=0;v<r.vexnum;v++)
+	visited[v]=0;
+	for(v=0;v<r.vexnum;v++)
+	if(!visited[v])
+	{
+		DFS(r,v);
+		k++;
+	}
+}
+int main()
+{
+	Bnode r;
+	create(r);
+	DFSchazhao(r);
+	cout<<endl;
+	cout<<k<<endl;
+	cout<<r.arcnum;
+	return 0;
+}
