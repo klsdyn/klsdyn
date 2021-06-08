@@ -1,0 +1,70 @@
+#include <iostream>
+using namespace std;
+
+#define MAXSIZE 100
+typedef int ElemType;
+typedef struct
+{   ElemType  *base;
+    ElemType  *top;
+}SqStack;
+
+bool initstack(SqStack &S)
+{	S.base=new ElemType[MAXSIZE];
+	if(!S.base) return false;
+	S.top=S.base;
+	return true;
+}
+
+bool push(SqStack &S,int e)
+{	if(S.top-S.base==MAXSIZE) return false;
+	*S.top++=e;
+	return true;
+}
+
+bool pop(SqStack &S,ElemType &e)
+{	if(S.top==S.base) return false;
+	e=*--S.top;
+	return true;
+}
+
+int gettop(SqStack S,int &e)
+{	if(S.top==S.base)
+        return false;
+    e=*(S.top-1);
+    return true;
+}
+
+void conversion(int x,int m)
+{	SqStack S;
+	ElemType e;
+	initstack(S);
+	while(x)
+    {	push(S,x%m);
+		x=x/m;
+	}
+	while(S.base!=S.top)
+	{
+		pop(S,e);
+		if(m==16)
+		    switch(e)
+			{
+				case 10:cout<<'A';break;
+				case 11:cout<<'B';break;
+				case 12:cout<<'C';break;
+				case 13:cout<<'D';break;
+				case 14:cout<<'E';break;
+				case 15:cout<<'F';break;
+				default:cout<<e;
+			}
+        else
+            cout<<e;
+    }
+}
+
+int main()
+{   int  x,m;
+	cin>>x;
+	cin>>m;
+	conversion(x,m);
+	return 0;
+}
