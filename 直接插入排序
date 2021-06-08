@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+#define MAXSIZE 50
+typedef int ElemType;
+typedef  struct
+{  ElemType r[MAXSIZE +1];
+   int length;
+} SqList;
+
+void create(SqList &L)
+{ int i;
+  cin>>L.length;
+  for(i=1;i<=L.length;i++)
+     cin>>L.r[i];
+}
+
+void print(SqList L)
+{ int i;
+  for(i=1;i<=L.length;i++)
+     if(i==1) cout<<L.r[i];
+     else cout<<' '<<L.r[i];
+  cout<<endl;
+}
+
+void  InsertSort(SqList  &L)
+{  int i,j;
+   for(i=2; i<=L.length; i++)
+    { L.r[0]=L.r[i];
+      for(j=i-1; L.r[j]>L.r[0]; j--)
+         L.r[j+1]=L.r[j];
+      L.r[j+1]=L.r[0];
+    }
+}
+
+int main ()
+{  SqList L;
+   create(L);
+   InsertSort(L);
+   print(L);
+   return 0;
+}
