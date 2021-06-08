@@ -1,0 +1,88 @@
+#include<iostream>
+#include<cstdio>
+#include<malloc.h>
+#include <stdlib.h>
+#define MAXSIZE 10
+using namespace std;
+typedef int ElemType;
+
+typedef struct
+{
+	ElemType *elem;
+	int length;
+}SqList;
+
+int ListInsert(SqList &L,int i,ElemType e)
+{
+	if(i<1 || i>L.length+1) 
+		return 0；
+	if(L.length>=MAXSIZE)
+		return 1;
+	for(int k=L.length;k>=i;k--)
+	{
+		L.elem[k]=L.elem[k-1];
+	}
+	L.elem[i-1]=e;
+	L.length++;
+	return 2;
+}
+
+void output(SqList L)
+{
+	ElemType i=0;
+	cout<<"Before:(";
+	while(L.length!=i)
+	{
+		cout<<L.elem[i];
+		if(i!=L.length-1)
+		cout<<",";
+		i++;
+	}
+	cout<<")\n";
+}
+
+void InitList(SqList &L)
+{
+	L.elem=(int *)malloc(MAXSIZE*sizeof(int));
+	 if(!L.elem)
+	 exit(0);
+	 int n;
+	 cin>>n;
+	 for(int i=0;i<n;i++)
+	 {
+	 	cin>>L.elem[i];
+	 }
+	 L.length=n; 
+}
+
+int main()
+{
+	SqList L;
+	InitList(L);
+	ElemType e;
+	int i;
+	cin>>i>>e;
+	output(L);
+	int result=ListInsert(L,i,e);
+	if(result==0)
+	{
+		cout<<"Insert position error!";
+	}
+	if(result==1)
+	{
+		cout<<"OVERFLOW!";
+	}
+	if(result==2)
+	{
+		cout<<"After:(";
+		for(int j=0;j<L.length;j++)
+		{
+			cout<<L.elem[j];
+			if(j!=(L.length-1))
+		 	    cout<<",";
+		}
+		cout<<")";
+	}
+	return 0;
+}
+
