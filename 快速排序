@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+#define MAXSIZE 50
+typedef int ElemType;
+typedef  struct
+{  ElemType r[MAXSIZE +1];
+   int length;
+} SqList;
+
+void create(SqList &L);
+void print(SqList L);
+int Partition(SqList &L,int low,int high);
+void QuickSort(SqList &L, int low, int high);
+
+void create(SqList &L)
+{ int i;
+  cin>>L.length;
+  for(i=1;i<=L.length;i++)
+     cin>>L.r[i];
+}
+
+void print(SqList L)
+{ int i;
+  for(i=1;i<=L.length;i++)
+     if(i==1) cout<<L.r[i];
+     else cout<<' '<<L.r[i];
+  cout<<endl;
+}
+
+int Partition(SqList &L,int low,int high)
+{   int i,j;
+    L.r[0]=L.r[low];
+    while (  low<high  )
+     {  while ( low<high && L.r [high]>=L.r[0] )
+            high--;
+        L.r[low]=L.r [high];
+        while ( low<high && L.r [low]<=L.r[0] )
+            low++;
+        L.r[high]=L.r[low];
+     }
+    L.r [low] =L.r[0];
+    return low;
+}
+
+void QuickSort(SqList &L, int low, int high)
+{  int i;
+   if (low<high )
+     {  i=Partition(L,low,high);
+        QuickSort(L,low,i-1);
+        QuickSort(L,i+1,high);
+     }
+}
+
+int main ()
+{  SqList L;  int low,high;
+   create(L);
+   low=1; high=L.length;
+   QuickSort(L,low,high);
+   print(L);
+   return 0;
+}
