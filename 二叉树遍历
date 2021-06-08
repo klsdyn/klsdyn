@@ -1,0 +1,87 @@
+#include <iostream>
+#include<cstdio>
+using namespace std;
+typedef char ElemType;
+typedef  struct  Binode
+{  ElemType data;
+    struct Binode *lchild,*rchild;
+}Binode,*Bitree;
+char ch;
+void CreateBitree(Bitree &T)
+{
+    cin>>ch;
+    if(ch=='#') T=NULL;
+    else
+    {
+        T=new Binode;
+        T->data=ch;
+        CreateBitree(T->lchild);
+        CreateBitree(T->rchild);
+    }
+}
+void xianxu(Bitree &T)
+{
+    if(T)
+    {
+        cout<<T->data;
+        xianxu(T->lchild);
+        xianxu(T->rchild);
+    }
+}
+void zhongxu(Bitree &T)
+{
+    if(T)
+    {
+        zhongxu(T->lchild);
+        cout<<T->data; 
+        zhongxu(T->rchild); 
+    }
+}
+void houxu(Bitree &T)
+{
+    if(T)
+    {
+        houxu(T->lchild); 
+        houxu(T->rchild);
+        cout<<T->data; 
+    }
+}
+int shendu(Bitree &T)
+{
+    int a,b;
+    if(T!=NULL)
+    {
+        a=shendu(T->lchild);
+        b=shendu(T->rchild);
+        return a>b?(a+1):(b+1);
+    }
+    return 0;
+}
+int yezi(Bitree &T)
+{
+    if(T==NULL) return 0;
+    else if(T->lchild==NULL&&T->rchild==NULL)
+    return 1;
+    else
+        return (yezi(T->lchild)+yezi(T->rchild));
+}
+int main()
+{
+    Bitree T;
+    T=new Binode;
+    CreateBitree(T);
+    cout<<"PreOrder:";
+    xianxu(T);
+    cout<<"\nInOrder:";
+    zhongxu(T);
+    cout<<"\nPostOrder:";
+    houxu(T);
+    cout<<"\n";
+    int n;
+    n=shendu(T);
+    cout<<"Depth:"<<n<<"\n";
+    int m;
+    m=yezi(T);
+    cout<<"Leaf:"<<m;
+    return 0;
+}
