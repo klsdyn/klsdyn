@@ -1,0 +1,28 @@
+int main()
+{
+	SqStack S;
+	S.base=new ElemType[MAXSIZE];
+	S.top=S.base;
+	int n,t,m;
+	scanf("%d",&n);
+	m=8;
+	while(n)
+	{
+		t=n%m;
+		*S.top=t;
+		*S.top++;
+		n=n/m;
+	}
+	while(S.top!=S.base)
+	{
+		*S.top--;
+		if(*S.top>9){
+	
+		*S.top+=55;
+		printf("%c",*S.top);}
+		else
+		printf("%d",*S.top);
+		
+	}
+	return 0;
+}
